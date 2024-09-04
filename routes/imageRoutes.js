@@ -1,19 +1,12 @@
 import express from 'express';
-import cors from 'cors';
-import multer from 'multer';
+import upload from './path/to/your/upload'; // Adjust the path to your upload middleware
 import fs from 'fs';
-import classifyImage from './routes/imageClassification.js';
+import { classifyImage } from './imageClassification.js'; // Adjust the path to your classifyImage function
 
-const app = express();
-const port = 5000;
-
-// Multer setup for file uploads
-const upload = multer({ dest: 'uploads/' });
-
-app.use(cors());
+const router = express.Router();
 
 // POST request to classify image
-app.post('/classify', upload.single('image'), async (req, res) => {
+router.post('/classify', upload.single('image'), async (req, res) => {
   try {
     const imageFilePath = req.file.path;
     const bestResult = await classifyImage(imageFilePath);
@@ -31,11 +24,8 @@ app.post('/classify', upload.single('image'), async (req, res) => {
 });
 
 // A simple route to check if the server is working
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.send('Hello from the Node.js backend!');
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on port number ${port}`);
-});
+export default router;
