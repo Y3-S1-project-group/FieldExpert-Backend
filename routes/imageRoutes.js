@@ -1,10 +1,9 @@
-// routes.js (or imageRoutes.js)
+import express from 'express';
+import upload from './path/to/your/upload'; // Adjust the path to your upload middleware
+import fs from 'fs';
+import { classifyImage } from './imageClassification.js'; // Adjust the path to your classifyImage function
 
-const express = require('express');
 const router = express.Router();
-const upload = require('./path/to/your/upload'); // Adjust the path to your upload middleware
-const fs = require('fs');
-const { classifyImage } = require('./path/to/your/classifyImage'); // Adjust the path to your classifyImage function
 
 // POST request to classify image
 router.post('/classify', upload.single('image'), async (req, res) => {
@@ -29,4 +28,4 @@ router.get('/', (req, res) => {
   res.send('Hello from the Node.js backend!');
 });
 
-module.exports = router;
+export default router;

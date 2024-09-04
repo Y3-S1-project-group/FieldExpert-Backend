@@ -1,6 +1,6 @@
-const fs = require('fs');
-const axios = require('axios');
-const FormData = require('form-data');
+import fs from 'fs';
+import axios from 'axios';
+import FormData from 'form-data';
 
 const classifyImage = async (imageFilePath) => {
   try {
@@ -35,4 +35,4 @@ const classifyImage = async (imageFilePath) => {
   }
 };
 
-module.exports = classifyImage;
+export default classifyImage;
