@@ -24,8 +24,10 @@ router.post('/classify', upload.single('image'), async (req, res) => {
 });
 
 // A simple route to check if the server is working
-router.get('/', (req, res) => {
-  res.send('Hello from the Node.js backend!');
-});
+// router.get('/', (req, res) => {
+//   res.send('Hello from the Node.js backend!');
+// });
+
+
 
 export default router;
