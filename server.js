@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import fs from 'fs';
+
 import classifyImage from './routes/imageClassification.js';
 
 const app = express();
@@ -11,6 +12,7 @@ const port = 5000;
 const upload = multer({ dest: 'uploads/' });
 
 app.use(cors());
+app.use(express.json());
 
 // POST request to classify image
 app.post('/classify', upload.single('image'), async (req, res) => {
