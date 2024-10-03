@@ -5,21 +5,32 @@ import Sale from '../model/sale.js';
 // Route to add a new sale record (/addSD)
 salesRouter.post("/addSD", async (req, res) => {
     try {
-        const { cropType, quantity, saleDate, customerInfo, distributionMethod, additionalDetails } = req.body;
+        const { cropType, quantity, onitemPrice, saleDate, customerInfo, distributionMethod, additionalDetails } = req.body;
 
         // Input validation
-        if (!cropType || !quantity || !saleDate || !customerInfo || !distributionMethod) {
+        if (!cropType || !quantity || !onitemPrice || !saleDate || !customerInfo || !distributionMethod) {
             return res.status(400).json({ error: "Missing required fields" });
         }
+
+        // Additional input validation for Unicode support
+        const unicodeValidation = /^[\u0000-\uFFFF]*$/;
+        if (!unicodeValidation.test(cropType) || !unicodeValidation.test(customerInfo) || !unicodeValidation.test(distributionMethod) || (additionalDetails && !unicodeValidation.test(additionalDetails))) {
+            return res.status(400).json({ error: "Invalid characters in input" });
+        }
+
+        // Calculate totalPrice
+        const totalPrice = quantity * onitemPrice;
 
         // Create a new sale object
         const newSaleData = {
             cropType,
             quantity,
+            onitemPrice,
             saleDate,
             customerInfo,
             distributionMethod,
-            additionalDetails: additionalDetails || ''
+            additionalDetails: additionalDetails || '',
+            totalPrice // Add totalPrice to the new sale object
         };
 
         const newSale = new Sale(newSaleData);
@@ -45,19 +56,29 @@ salesRouter.get("/SD", async (req, res) => {
     }
 });
 
-
 // Route to update a sale record (/updateSD)
 salesRouter.put("/updateSD/:id", async (req, res) => {
     try {
-        const { cropType, quantity, saleDate, customerInfo, distributionMethod, additionalDetails } = req.body;
+        const { cropType, quantity, onitemPrice, saleDate, customerInfo, distributionMethod, additionalDetails } = req.body;
+
+        // Additional input validation for Unicode support
+        const unicodeValidation = /^[\u0000-\uFFFF]*$/;
+        if (!unicodeValidation.test(cropType) || !unicodeValidation.test(customerInfo) || !unicodeValidation.test(distributionMethod) || (additionalDetails && !unicodeValidation.test(additionalDetails))) {
+            return res.status(400).json({ error: "Invalid characters in input" });
+        }
+
+        // Calculate totalPrice
+        const totalPrice = quantity * onitemPrice;
 
         const updatedSale = {
             cropType,
             quantity,
+            onitemPrice,
             saleDate,
             customerInfo,
             distributionMethod,
-            additionalDetails
+            additionalDetails,
+            totalPrice // Add totalPrice to the updated sale object
         };
 
         const updatedRecord = await Sale.findByIdAndUpdate(req.params.id, updatedSale, { new: true });

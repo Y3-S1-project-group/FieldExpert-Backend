@@ -17,6 +17,7 @@ const upload = multer({ dest: "uploads/" });
 
 app.use(cors());
 app.use(express.json()); // To parse JSON request bodies
+app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies with Unicode characters
 
 // Connect to MongoDB
 mongoose
@@ -52,10 +53,11 @@ app.get("/", (req, res) => {
   res.send("Hello from the Node.js backend!");
 });
 
+
+// Mount the salesRouter at the '/sales' endpoint
+app.use("/Sale", salesRouter);
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port number ${port}`);
 });
-
-// Mount the salesRouter at the '/sales' endpoint
-app.use("/Sale", salesRouter);
