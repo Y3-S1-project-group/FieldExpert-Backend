@@ -1,7 +1,10 @@
+//server.js
+
 import express from "express";
 import cors from "cors";
 import multer from "multer";
 import fs from "fs";
+
 import classifyImage from "./routes/imageClassification.js";
 import salesRouter from "./routes/SalesRouter.js";
 import cropRouter from "./routes/CropRouter.js";
@@ -9,6 +12,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 dotenv.config(); // Load environment variables
+import diseaseRoutes from './routes/diseaseRoutes.js';
 
 const app = express();
 const port = 5000;
@@ -18,6 +22,7 @@ const upload = multer({ dest: "uploads/" });
 
 app.use(cors());
 app.use(express.json()); // To parse JSON request bodies
+app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies with Unicode characters
 
 // Connect to MongoDB
 mongoose
@@ -48,10 +53,9 @@ app.post("/classify", upload.single("image"), async (req, res) => {
   }
 });
 
-// A simple route to check if the server is working
-app.get("/", (req, res) => {
-  res.send("Hello from the Node.js backend!");
-});
+// Mount the salesRouter at the '/sales' endpoint
+app.use("/Sale", salesRouter);
+app.use('/diseaseDetect', diseaseRoutes);
 
 // Start the server
 app.listen(port, () => {

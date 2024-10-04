@@ -1,3 +1,5 @@
+//imageRoutes.js
+
 import express from 'express';
 import upload from './path/to/your/upload'; // Adjust the path to your upload middleware
 import fs from 'fs';
@@ -22,12 +24,5 @@ router.post('/classify', upload.single('image'), async (req, res) => {
     res.status(500).send('Error classifying image');
   }
 });
-
-// A simple route to check if the server is working
-// router.get('/', (req, res) => {
-//   res.send('Hello from the Node.js backend!');
-// });
-
-
 
 export default router;
