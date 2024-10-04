@@ -1,3 +1,5 @@
+//imageClassification.js
+
 import fs from 'fs';
 import axios from 'axios';
 import FormData from 'form-data';
