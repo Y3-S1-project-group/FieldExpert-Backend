@@ -14,6 +14,8 @@ import dotenv from "dotenv";
 dotenv.config(); // Load environment variables
 import diseaseRoutes from './routes/diseaseRoutes.js';
 
+import inventoryRouter from "./routes/Inventories.js";
+
 const app = express();
 const port = 5000;
 
@@ -56,6 +58,9 @@ app.post("/classify", upload.single("image"), async (req, res) => {
 // Mount the salesRouter at the '/sales' endpoint
 app.use("/Sale", salesRouter);
 app.use('/diseaseDetect', diseaseRoutes);
+
+//Inventory routes
+app.use("/api/inventory", inventoryRouter);
 
 // Start the server
 app.listen(port, () => {
