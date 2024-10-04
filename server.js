@@ -7,6 +7,7 @@ import fs from "fs";
 
 import classifyImage from "./routes/imageClassification.js";
 import salesRouter from "./routes/SalesRouter.js";
+import cropRouter from "./routes/CropRouter.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -60,3 +61,10 @@ app.use('/diseaseDetect', diseaseRoutes);
 app.listen(port, () => {
   console.log(`Server is running on port number ${port}`);
 });
+
+// Mount the salesRouter at the '/sales' endpoint
+app.use("/Sale", salesRouter);
+
+// Mount the cropRouter at the '/crop' endpoint
+app.use("/Crop", cropRouter);
+
