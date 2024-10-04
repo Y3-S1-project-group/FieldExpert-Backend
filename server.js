@@ -34,11 +34,6 @@ app.post('/classify', upload.single('image'), async (req, res) => {
   }
 });
 
-// A simple route to check if the server is working
-app.get('/', (req, res) => {
-  res.send('Hello from the Node.js backend!');
-});
-
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port number ${port}`);
