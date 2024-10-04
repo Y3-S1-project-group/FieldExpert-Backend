@@ -6,6 +6,7 @@ import multer from 'multer';
 import fs from 'fs';
 
 import classifyImage from './routes/imageClassification.js';
+import diseaseRoutes from './routes/diseaseRoutes.js';
 
 const app = express();
 const port = 5000;
@@ -33,6 +34,8 @@ app.post('/classify', upload.single('image'), async (req, res) => {
     res.status(500).send('Error classifying image');
   }
 });
+
+app.use('/diseaseDetect', diseaseRoutes);
 
 // Start the server
 app.listen(port, () => {
