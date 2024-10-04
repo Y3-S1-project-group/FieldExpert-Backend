@@ -5,10 +5,10 @@ import Crop from '../model/crop.js';
 // Route to add a new crop record (/addCrop)
 cropRouter.post("/addCrop", async (req, res) => {
     try {
-        const { cropName, quantity, area, plantingDate, harvestDate } = req.body;
+        const { cropName, quantity, area, city, plantingDate, harvestDate } = req.body;
 
         // Input validation
-        if (!cropName || !quantity || !area || !plantingDate || !harvestDate) {
+        if (!cropName || !quantity || !area ||!city ||!plantingDate || !harvestDate) {
             return res.status(400).json({ error: "Missing required fields" });
         }
 
@@ -17,6 +17,7 @@ cropRouter.post("/addCrop", async (req, res) => {
             cropName,
             quantity,
             area,
+            city,
             plantingDate,
             harvestDate
         };
@@ -49,7 +50,7 @@ cropRouter.get("/getCrops", async (req, res) => {
 // Route to update a crop record (/updateCrop)
 cropRouter.put("/updateCrop/:id", async (req, res) => {
     const { id } = req.params;
-    const { cropName, quantity, area, plantingDate, harvestDate } = req.body;
+    const { cropName, quantity, area,city, plantingDate, harvestDate } = req.body;
 
     try {
         const updatedCrop = await Crop.findByIdAndUpdate(
@@ -58,6 +59,7 @@ cropRouter.put("/updateCrop/:id", async (req, res) => {
                 cropName,
                 quantity,
                 area,
+                city,
                 plantingDate,
                 harvestDate,
             },

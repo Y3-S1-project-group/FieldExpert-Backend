@@ -12,7 +12,11 @@ const cropSchema = new Schema({
             required: true,
         },
         area: {
-            type: Number,
+            type: String,
+            required: true,
+        },
+        city: {
+            type: String,
             required: true,
         },
         plantingDate: {
