@@ -25,3 +25,7 @@ secrets.txt
 # Ignore dependencies and package managers
 /node_modules/
 /vendor/
+
+# Environment variables
+.env
+.env.local
